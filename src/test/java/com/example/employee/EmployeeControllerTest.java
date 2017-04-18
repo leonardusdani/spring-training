@@ -35,5 +35,11 @@ public class EmployeeControllerTest {
     	this.mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content("{\"id\":4,\"name\":\"Agri\",\"gender\":\"male\"}"))
     		.andExpect(content().json("{\"id\":4,\"name\":\"Agri\",\"gender\":\"male\"}"));
     }
+    
+    @Test
+    public void getEmployeesById() throws Exception{
+			this.mockMvc.perform(get("/employees/5"))
+    		.andExpect(status().isNotFound());
+    }
 
 }

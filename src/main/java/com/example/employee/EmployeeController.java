@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +24,18 @@ public class EmployeeController {
 		}
         return listEmployee.stream().filter(s->s.getGender().equals(gender)).collect(Collectors.toList());
     }
+	
+	@GetMapping("/employees/{id}")
+	@ResponseBody
+	public Employee getEmployeeById(@PathVariable Integer id){
+		Employee employee;
+		try{
+			employee = listEmployee.stream().filter(s->s.getId().equals(id)).collect(Collectors.toList()).get(0);
+		}catch (Exception e) {
+			throw new EmployeeException();
+		}
+		return employee;
+	}
     
     @PostMapping(value="/employees")
     @ResponseBody
